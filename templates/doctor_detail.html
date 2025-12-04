@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}{{ doctor.name }} - Doctor Directory{% endblock %}
+
+{% block extra_css %}
+<style>
+    .doctor-header {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+    
+    .doctor-image-large {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .doctor-info-section {
+        flex: 1;
+        min-width: 300px;
+    }
+    
+    .doctor-name {
+        color: #667eea;
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+    
+    .specialization-badge {
+        display: inline-block;
+        background: #764ba2;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .info-grid {
+        display: grid;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .info-item {
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+    }
+    
+    .info-item strong {
+        color: #667eea;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .bio-section {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+    
+    .bio-section h3 {
+        color: #667eea;
+        margin-bottom: 15px;
+    }
+    
+    .back-btn {
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="doctor-header">
+        <img src="{{ doctor.image }}" alt="{{ doctor.name }}" class="doctor-image-large">
+        <div class="doctor-info-section">
+            <h1 class="doctor-name">{{ doctor.name }}</h1>
+            <span class="specialization-badge">{{ doctor.specialization }}</span>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Qualifications</strong>
+                    {{ doctor.qualifications }}
+                </div>
+                <div class="info-item">
+                    <strong>Experience</strong>
+                    {{ doctor.experience }}
+                </div>
+                <div class="info-item">
+                    <strong>Phone</strong>
+                    <a href="tel:{{ doctor.phone }}">{{ doctor.phone }}</a>
+                </div>
+                <div class="info-item">
+                    <strong>Email</strong>
+                    <a href="mailto:{{ doctor.email }}">{{ doctor.email }}</a>
+                </div>
+                <div class="info-item">
+                    <strong>Address</strong>
+                    {{ doctor.address }}
+                </div>
+                <div class="info-item">
+                    <strong>Consultation Hours</strong>
+                    {{ doctor.consultation_hours }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bio-section">
+        <h3>About Dr. {{ doctor.name.split(' ')[-1] }}</h3>
+        <p>{{ doctor.bio }}</p>
+    </div>
+    
+    <a href="/" class="btn back-btn">← Back to Doctors List</a>
+</div>
+{% endblock %}
+

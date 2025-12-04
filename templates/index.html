@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Doctor Directory{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        text-align: center;
+        color: white;
+        padding: 60px 20px;
+        margin-bottom: 30px;
+    }
+    
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+    
+    .hero p {
+        font-size: 20px;
+        opacity: 0.9;
+    }
+    
+    .doctors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+    
+    .doctor-card {
+        background: white;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .doctor-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .doctor-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .doctor-card h2 {
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    
+    .specialization {
+        color: #764ba2;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    
+    .doctor-info {
+        margin-bottom: 15px;
+    }
+    
+    .doctor-info p {
+        margin: 5px 0;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to Doctor Directory</h1>
+    <p>Find the best healthcare professionals for your needs</p>
+</div>
+
+<div class="content">
+    <h2 style="margin-bottom: 20px; color: #667eea;">Our Doctors</h2>
+    <div class="doctors-grid">
+        {% for doctor in doctors %}
+        <div class="doctor-card">
+            <img src="{{ doctor.image }}" alt="{{ doctor.name }}" class="doctor-image">
+            <h2>{{ doctor.name }}</h2>
+            <div class="specialization">{{ doctor.specialization }}</div>
+            <div class="doctor-info">
+                <p><strong>Experience:</strong> {{ doctor.experience }}</p>
+                <p><strong>Qualifications:</strong> {{ doctor.qualifications }}</p>
+            </div>
+            <a href="/doctor/{{ doctor.id }}" class="btn">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
