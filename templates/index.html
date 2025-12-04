@@ -1,548 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Mess Management System</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            padding: 30px;
-        }
-        
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-        }
-        
-        .section {
-            margin-bottom: 40px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-        
-        .section h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 600;
-        }
-        
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-weight: 600;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-        
-        .student-details {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            border: 2px solid #667eea;
-        }
-        
-        .student-details.active {
-            display: block;
-        }
-        
-        .details-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .details-header h3 {
-            margin-bottom: 10px;
-        }
-        
-        .meal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .meal-card {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-            transition: border-color 0.3s;
-        }
-        
-        .meal-card:hover {
-            border-color: #667eea;
-        }
-        
-        .meal-card h4 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .meal-status {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .status-badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .status-yes {
-            background: #4caf50;
-            color: white;
-        }
-        
-        .status-no {
-            background: #f44336;
-            color: white;
-        }
-        
-        .payment-info {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #ffc107;
-        }
-        
-        .payment-info h4 {
-            color: #856404;
-            margin-bottom: 10px;
-        }
-        
-        .update-form {
-            background: #e3f2fd;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        
-        .checkbox-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-        }
-        
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: normal;
-        }
-        
-        input[type="checkbox"] {
-            width: auto;
-            transform: scale(1.2);
-        }
-        
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        
-        tr:hover {
-            background: #e3f2fd;
-        }
-        
-        .table-container {
-            max-height: 500px;
-            overflow-y: auto;
-            border: 2px solid #667eea;
-            border-radius: 8px;
-        }
-        
-        .status-yes-table {
-            background: #4caf50;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-weight: 600;
-            display: inline-block;
-            font-size: 12px;
-        }
-        
-        .status-no-table {
-            background: #f44336;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-weight: 600;
-            display: inline-block;
-            font-size: 12px;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🏠 Home Mess Management System</h1>
-        
-        <!-- Add New Student Section -->
-        <div class="section">
-            <h2>Add New Student</h2>
-            <form method="POST" action="/add_student">
-                <div class="form-group">
-                    <label for="name">Student Name:</label>
-                    <input type="text" id="name" name="name" required placeholder="Enter student name">
-                </div>
-                <div class="form-group">
-                    <label for="payment_method">Payment Method:</label>
-                    <select id="payment_method" name="payment_method" required>
-                        <option value="">Select Payment Method</option>
-                        <option value="Cash">Cash</option>
-                        <option value="UPI">UPI</option>
-                        <option value="Bank Transfer">Bank Transfer</option>
-                        <option value="Card">Card</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn">Add Student</button>
-            </form>
-        </div>
-        
-        <!-- View Student Details Section -->
-        <div class="section">
-            <h2>View Student Details</h2>
-            <div class="form-group">
-                <label for="student_select">Select Student:</label>
-                <select id="student_select" name="student_select" onchange="loadStudentDetails()">
-                    <option value="">-- Select a student --</option>
-                    {% for student in students %}
-                    <option value="{{ student.id }}">{{ student.name }} (ID: {{ student.id }})</option>
-                    {% endfor %}
-                </select>
-            </div>
-            
-            <div id="student_details" class="student-details">
-                <div class="details-header">
-                    <h3 id="student_name"></h3>
-                    <p id="student_payment_method"></p>
-                </div>
-                
-                <div class="payment-info">
-                    <h4>Payment Information</h4>
-                    <p><strong>Payment Method:</strong> <span id="payment_method_display"></span></p>
-                    <p><strong>Payment Amount:</strong> ₹<span id="payment_amount"></span></p>
-                    <p><strong>Last Payment Date:</strong> <span id="payment_date_display"></span></p>
-                    
-                    <div class="update-form">
-                        <h4>Update Payment</h4>
-                        <form method="POST" action="/update_payment" id="payment_form">
-                            <input type="hidden" name="student_id" id="payment_student_id">
-                            <div class="form-group">
-                                <label for="amount">Payment Amount:</label>
-                                <input type="number" name="amount" id="amount" step="0.01" min="0" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="payment_date">Payment Date:</label>
-                                <input type="date" name="payment_date" id="payment_date" required>
-                            </div>
-                            <button type="submit" class="btn btn-secondary">Update Payment</button>
-                        </form>
-                    </div>
-                </div>
-                
-                <h4 style="margin-top: 20px; margin-bottom: 15px;">Complete History (Excel View)</h4>
-                <div id="summary_stats" style="margin-bottom: 15px; padding: 15px; background: #e8f5e9; border-radius: 8px; display: none;">
-                    <strong>Summary:</strong> 
-                    <span id="total_records"></span> | 
-                    <span id="total_lunch"></span> | 
-                    <span id="total_dinner"></span> | 
-                    <span id="total_payment"></span>
-                </div>
-                <div id="meal_records" style="overflow-x: auto;"></div>
-                
-                <div class="update-form">
-                    <h4>Update Meal Status for Today</h4>
-                    <form method="POST" action="/update_meal" id="meal_form">
-                        <input type="hidden" name="student_id" id="meal_student_id">
-                        <div class="form-group">
-                            <label for="meal_date">Date:</label>
-                            <input type="date" name="date" id="meal_date" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Meal Options:</label>
-                            <div class="checkbox-group">
-                                <label>
-                                    <input type="checkbox" name="lunch" value="Yes" id="lunch_check" onchange="updateCheckboxValue(this)">
-                                    Lunch
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="dinner" value="Yes" id="dinner_check" onchange="updateCheckboxValue(this)">
-                                    Dinner
-                                </label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn">Update Meal Status</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+{% extends "base.html" %}
+
+{% block title %}Home - Doctor Directory{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        text-align: center;
+        color: white;
+        padding: 60px 20px;
+        margin-bottom: 30px;
+    }
     
-    <script>
-        function loadStudentDetails() {
-            const studentId = document.getElementById('student_select').value;
-            const detailsDiv = document.getElementById('student_details');
-            
-            if (!studentId) {
-                detailsDiv.classList.remove('active');
-                return;
-            }
-            
-            fetch(`/get_student/${studentId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert('Student not found');
-                        return;
-                    }
-                    
-                    // Display student info
-                    document.getElementById('student_name').textContent = data.name;
-                    document.getElementById('student_payment_method').textContent = `Payment Method: ${data.payment_method}`;
-                    document.getElementById('payment_method_display').textContent = data.payment_method;
-                    
-                    // Set payment info
-                    const latestRecord = data.records[data.records.length - 1];
-                    document.getElementById('payment_amount').textContent = latestRecord.Payment_Amount || 0;
-                    document.getElementById('payment_date_display').textContent = latestRecord.Payment_Date || 'N/A';
-                    
-                    // Set form values
-                    document.getElementById('payment_student_id').value = data.id;
-                    document.getElementById('meal_student_id').value = data.id;
-                    document.getElementById('amount').value = latestRecord.Payment_Amount || 0;
-                    document.getElementById('payment_date').value = latestRecord.Payment_Date || new Date().toISOString().split('T')[0];
-                    document.getElementById('meal_date').value = new Date().toISOString().split('T')[0];
-                    
-                    // Load meal status for today if exists
-                    loadMealStatusForDate(data.records);
-                    
-                    // Display meal records
-                    displayMealRecords(data.records);
-                    
-                    // Show details
-                    detailsDiv.classList.add('active');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error loading student details');
-                });
-        }
-        
-        function displayMealRecords(records) {
-            const recordsDiv = document.getElementById('meal_records');
-            const summaryDiv = document.getElementById('summary_stats');
-            
-            if (records.length === 0) {
-                recordsDiv.innerHTML = '<p>No meal records found.</p>';
-                summaryDiv.style.display = 'none';
-                return;
-            }
-            
-            // Sort records by date (newest first)
-            records.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-            
-            // Calculate summary statistics
-            const totalRecords = records.length;
-            const totalLunch = records.filter(r => r.Lunch === 'Yes').length;
-            const totalDinner = records.filter(r => r.Dinner === 'Yes').length;
-            const totalPayment = records.reduce((sum, r) => sum + (parseFloat(r.Payment_Amount) || 0), 0);
-            
-            // Display summary
-            document.getElementById('total_records').textContent = `Total Records: ${totalRecords}`;
-            document.getElementById('total_lunch').textContent = `Lunch Days: ${totalLunch}`;
-            document.getElementById('total_dinner').textContent = `Dinner Days: ${totalDinner}`;
-            document.getElementById('total_payment').textContent = `Total Payment: ₹${totalPayment.toFixed(2)}`;
-            summaryDiv.style.display = 'block';
-            
-            let html = '<div class="table-container"><table>';
-            html += '<thead><tr>';
-            html += '<th>Student ID</th>';
-            html += '<th>Name</th>';
-            html += '<th>Payment Method</th>';
-            html += '<th>Date</th>';
-            html += '<th class="text-center">Lunch</th>';
-            html += '<th class="text-center">Dinner</th>';
-            html += '<th>Payment Amount (₹)</th>';
-            html += '<th>Payment Date</th>';
-            html += '</tr></thead>';
-            html += '<tbody>';
-            
-            records.forEach(record => {
-                const lunchStatus = record.Lunch === 'Yes' ? 'status-yes-table' : 'status-no-table';
-                const dinnerStatus = record.Dinner === 'Yes' ? 'status-yes-table' : 'status-no-table';
-                
-                html += '<tr>';
-                html += `<td>${record.Student_ID}</td>`;
-                html += `<td>${record.Name}</td>`;
-                html += `<td>${record.Payment_Method}</td>`;
-                html += `<td>${record.Date}</td>`;
-                html += `<td class="text-center"><span class="${lunchStatus}">${record.Lunch}</span></td>`;
-                html += `<td class="text-center"><span class="${dinnerStatus}">${record.Dinner}</span></td>`;
-                html += `<td>${parseFloat(record.Payment_Amount || 0).toFixed(2)}</td>`;
-                html += `<td>${record.Payment_Date || 'N/A'}</td>`;
-                html += '</tr>';
-            });
-            
-            html += '</tbody></table></div>';
-            
-            recordsDiv.innerHTML = html;
-        }
-        
-        function updateCheckboxValue(checkbox) {
-            // Ensure checkbox sends 'Yes' when checked
-            if (checkbox.checked) {
-                checkbox.value = 'Yes';
-            } else {
-                checkbox.value = 'No';
-            }
-        }
-        
-        function loadMealStatusForDate(records) {
-            const dateInput = document.getElementById('meal_date');
-            const selectedDate = dateInput.value;
-            
-            // Find record for selected date
-            const record = records.find(r => r.Date === selectedDate);
-            
-            if (record) {
-                document.getElementById('lunch_check').checked = record.Lunch === 'Yes';
-                document.getElementById('dinner_check').checked = record.Dinner === 'Yes';
-            } else {
-                document.getElementById('lunch_check').checked = false;
-                document.getElementById('dinner_check').checked = false;
-            }
-        }
-        
-        // Set today's date as default for meal date and add date change listener
-        document.addEventListener('DOMContentLoaded', function() {
-            const mealDateInput = document.getElementById('meal_date');
-            mealDateInput.value = new Date().toISOString().split('T')[0];
-            
-            // Load meal status when date changes
-            mealDateInput.addEventListener('change', function() {
-                const studentId = document.getElementById('student_select').value;
-                if (studentId) {
-                    fetch(`/get_student/${studentId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (!data.error) {
-                                loadMealStatusForDate(data.records);
-                            }
-                        });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+    
+    .hero p {
+        font-size: 20px;
+        opacity: 0.9;
+    }
+    
+    .doctors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+    
+    .doctor-card {
+        background: white;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .doctor-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .doctor-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .doctor-card h2 {
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    
+    .specialization {
+        color: #764ba2;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    
+    .doctor-info {
+        margin-bottom: 15px;
+    }
+    
+    .doctor-info p {
+        margin: 5px 0;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to Doctor Directory</h1>
+    <p>Find the best healthcare professionals for your needs</p>
+</div>
+
+<div class="content">
+    <h2 style="margin-bottom: 20px; color: #667eea;">Our Doctors</h2>
+    <div class="doctors-grid">
+        {% for doctor in doctors %}
+        <div class="doctor-card">
+            <img src="{{ doctor.image }}" alt="{{ doctor.name }}" class="doctor-image">
+            <h2>{{ doctor.name }}</h2>
+            <div class="specialization">{{ doctor.specialization }}</div>
+            <div class="doctor-info">
+                <p><strong>Experience:</strong> {{ doctor.experience }}</p>
+                <p><strong>Qualifications:</strong> {{ doctor.qualifications }}</p>
+            </div>
+            <a href="/doctor/{{ doctor.id }}" class="btn">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
 
